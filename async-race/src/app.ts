@@ -1,0 +1,58 @@
+import GaragePage from "./pages/garage/garage";
+import WinnersPage from "./pages/winners/winners";
+import Header from "./common/header";
+
+export enum PageIds {
+   GARAGEPAGE = 'garage-page',
+   WINNERSPAGE = 'winners-page'
+}
+
+class App {
+  private static container: HTMLElement = document.body;
+  private garage!: GaragePage;
+  private header!: Header;
+  private static currentPageId: string = 'current-page';
+
+  static renderNewPage(idPage: string) {
+    const currentPageHTML = document.querySelector(`#${App.currentPageId}`);
+    if (currentPageHTML) {
+      currentPageHTML.remove();
+    }
+    let page: GaragePage | WinnersPage | null = null;
+
+    if (idPage === PageIds.GARAGEPAGE) {
+        page = new GaragePage(idPage);
+    } else if (idPage === PageIds.WINNERSPAGE) {
+        page = new WinnersPage(idPage);
+    }
+
+    if (page) {
+        const pageHTML = page.render();
+        pageHTML.id = App.currentPageId;
+        App.container.append(pageHTML);
+    }
+  }
+
+
+    private enableRouteChange() {
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1);
+            App.renderNewPage(hash);
+        })
+    }
+
+  constructor() {
+    this.garage = new GaragePage('garage-page');
+    this.header = new Header('header', 'header');
+
+  }
+
+  run() {
+    App.container.append(this.header.render());
+    App.renderNewPage('garage-page');
+    this.enableRouteChange();
+  };
+}
+
+
+export default App;
