@@ -1,6 +1,7 @@
 import GaragePage from "./pages/garage/garage";
 import WinnersPage from "./pages/winners/winners";
 import Header from "./common/header";
+import ErrorPage from "./pages/error/error";
 
 export enum PageIds {
    GARAGEPAGE = 'garage-page',
@@ -9,8 +10,11 @@ export enum PageIds {
 
 class App {
   private static container: HTMLElement = document.body;
+
   private garage!: GaragePage;
+
   private header!: Header;
+
   private static currentPageId: string = 'current-page';
 
   static renderNewPage(idPage: string) {
@@ -18,12 +22,14 @@ class App {
     if (currentPageHTML) {
       currentPageHTML.remove();
     }
-    let page: GaragePage | WinnersPage | null = null;
+    let page: GaragePage | WinnersPage | ErrorPage | null = null;
 
     if (idPage === PageIds.GARAGEPAGE) {
         page = new GaragePage(idPage);
     } else if (idPage === PageIds.WINNERSPAGE) {
         page = new WinnersPage(idPage);
+    } else {
+      page = new ErrorPage(idPage, '404');
     }
 
     if (page) {

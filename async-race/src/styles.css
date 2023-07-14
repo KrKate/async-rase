@@ -4,9 +4,36 @@
   box-sizing: border-box;
 }
 
-img {
-  height: 100px;
-  width: 200px;
-  background-color: blueviolet;
-  background-image: url(./img/car.svg);
+body {
+  padding: 15px;
 }
+
+.header div {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.header div a {
+  padding: 4px;
+  background-color: rgb(127, 255, 178);
+  color: black;
+  text-decoration: none;
+}
+
+.settings-container {
+  display: grid;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+
+.settings-create-container,
+.settings-update-container,
+.settings-buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+

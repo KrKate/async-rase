@@ -2,12 +2,12 @@
 const Buttons = [
     {
         id: 'garage-page',
-        text: 'to Garage',
+        text: 'TO GARAGE',
     },
 
     {
         id: 'winners-page',
-        text: 'to Winners',
+        text: 'TO WINNERS',
     }
 ];
 
