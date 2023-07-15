@@ -1,3 +1,5 @@
+import sprite from "./sprite";
+
 class GaragePage {
     private container: HTMLElement;
 
@@ -10,11 +12,20 @@ class GaragePage {
         this.container.id = id;
     }
 
-    private createHeaderTitle(text: string) {
-        const headerTitle = document.createElement('h1');
-        headerTitle.innerText = text;
-        return headerTitle;
-    }
+ createHeaderTitle(text: string) {
+  const headerContainer = document.createElement('div');
+  headerContainer.className = 'header-container';
+
+  const headerTitle = document.createElement('h1');
+  headerTitle.innerText = text;
+
+  const carsCount = document.createElement('div');
+  carsCount.innerText = `(4)`;
+
+  headerContainer.append(headerTitle, carsCount);
+  return headerContainer;
+}
+
 
     private createButton(text: string, className: string) {
         const button = document.createElement('button');
@@ -60,10 +71,43 @@ class GaragePage {
         return settingsContainer;
     }
 
+    createCarContainer(id: number, name: string, color: string) {
+        const carContainer = document.createElement('div');
+        carContainer.className = 'car-container';
+
+        const carsControl = document.createElement('div');
+        carsControl.className = `cars-control`;
+
+        const racingTrack = document.createElement('div');
+        racingTrack.className = 'racing-track';
+
+        const buttonSelect = this.createButton('SELECT', 'button-select');
+        const buttonRemove = this.createButton('REMOVE', 'button-remove');
+        const carName = document.createElement('div');
+        carName.innerText = `${name}`;
+        carsControl.append(buttonSelect, buttonRemove, carName);
+
+        const buttonStart = this.createButton('A', 'button-start');
+        const buttonStop = this.createButton('B', 'button-stop');
+        const carImage = document.createElement('div');
+        carImage.innerHTML = `${sprite}
+        <svg class='image' fill="${color}">
+          <use xlink:href="#car-img"></use>
+        </svg>
+        `
+        racingTrack.append(buttonStart, buttonStop, carImage);
+
+        carContainer.append(carsControl, racingTrack);
+        return carContainer;
+      }
+
+
     render() {
         const title = this.createHeaderTitle(GaragePage.TextObject.GarageTitle);
         const settings = this.createSettings();
-        this.container.append( settings, title);
+        const car = this.createCarContainer(1, '1', '#ff0fff');
+        this.container.append( settings, title, car);
+
         return this.container
     }
 }
