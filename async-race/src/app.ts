@@ -1,3 +1,4 @@
+
 import GaragePage from "./pages/garage/garage";
 import WinnersPage from "./pages/winners/winners";
 import Header from "./common/header";
@@ -17,7 +18,7 @@ class App {
 
   private static currentPageId: string = 'current-page';
 
-  static renderNewPage(idPage: string) {
+  static async renderNewPage(idPage: string) {
     const currentPageHTML = document.querySelector(`#${App.currentPageId}`);
     if (currentPageHTML) {
       currentPageHTML.remove();
@@ -25,32 +26,32 @@ class App {
     let page: GaragePage | WinnersPage | ErrorPage | null = null;
 
     if (idPage === PageIds.GARAGEPAGE) {
-        page = new GaragePage(idPage);
+      page = new GaragePage(idPage);
     } else if (idPage === PageIds.WINNERSPAGE) {
-        page = new WinnersPage(idPage);
+      page = new WinnersPage(idPage);
     } else {
       page = new ErrorPage(idPage, '404');
     }
 
     if (page) {
-        const pageHTML = page.render();
+      const pageHTML = await page.render();
+      if (pageHTML instanceof HTMLElement) {
         pageHTML.id = App.currentPageId;
         App.container.append(pageHTML);
+      }
     }
   }
 
-
-    private enableRouteChange() {
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.slice(1);
-            App.renderNewPage(hash);
-        })
-    }
+  private enableRouteChange() {
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.slice(1);
+      App.renderNewPage(hash);
+    })
+  }
 
   constructor() {
     this.garage = new GaragePage('garage-page');
     this.header = new Header('header', 'header');
-
   }
 
   run() {
@@ -59,6 +60,5 @@ class App {
     this.enableRouteChange();
   };
 }
-
 
 export default App;

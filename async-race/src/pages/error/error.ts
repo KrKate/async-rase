@@ -1,5 +1,3 @@
-import '../../styles.css'
-
 class ErrorPage {
     private container: HTMLElement;
 

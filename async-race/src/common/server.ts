@@ -1,34 +1,29 @@
-export const server = 'http://127.0.0.1:3000';
+import createCarContainer from "./createCar";
 
-export enum Path {
+enum Path {
+    SERVER = 'http://127.0.0.1:3000',
     GARAGE = 'garage',
     ENGINE = 'engine'
  }
 
-export const garage = `${server}/${Path.GARAGE}`;
-export const engine = `${server}/${Path.ENGINE}`;
+const garage = `${Path.SERVER}/${Path.GARAGE}`;
 
+const getCarsAPI = async (page: number, limit: number = 7) => {
+   const response = await fetch(`${garage}?_page=${page}&_limit=${limit}`, { method: 'GET' });
+   return response.json();
+};
 
-export async function getCountOfCars() {
-    const response = await fetch(garage, { method: 'GET' });
-    const data = await response.json();
-    console.log(data.length)
-    return data.length;
+const pageNumber = 1;
+
+async function updateCars() {
+    const arr = await getCarsAPI(pageNumber);
+    const containerAllCar = document.createElement('div');
+    containerAllCar.innerHTML = '';
+    arr.forEach((car: { id: number; name: string; color: string; }) => {
+        const carItem = createCarContainer(car.id, car.name, car.color);
+        containerAllCar.appendChild(carItem);
+    });
+    return containerAllCar;
 }
 
-getCountOfCars().then(length => {
-    console.log(length);
-});
-
-
-// export let countAllCars = 0;
-
-// export const getCarsAPI = async (page: number, limit = 7) => {
-//   const response = await fetch(`${garage}?_page=${page}&_limit=${limit}`, { method: 'GET' });
-//   countAllCars = Number(response.headers.get('X-Total-count'));
-
-//   return response.json();
-// };
-
-
-// export const getCarAPI = async (id: number) => (await fetch(`${garage}/${id}`, { method: 'GET' })).json();
+export default updateCars;

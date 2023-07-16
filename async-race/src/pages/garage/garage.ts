@@ -1,4 +1,6 @@
-import sprite from "./sprite";
+import createButton from "../../common/createButton";
+// import createCarContainer from "../../common/createCar";
+import updateCars from "../../common/server";
 
 class GaragePage {
     private container: HTMLElement;
@@ -26,15 +28,7 @@ class GaragePage {
   return headerContainer;
 }
 
-
-    private createButton(text: string, className: string) {
-        const button = document.createElement('button');
-        button.innerText = text;
-        button.className = className;
-        return button;
-    }
-
-    private createInput(type: string, className: string, value?: string | undefined | null) {
+    public createInput(type: string, className: string, value?: string | undefined | null) {
         const input = document.createElement('input');
         input.type = type;
         input.className = className;
@@ -50,62 +44,31 @@ class GaragePage {
         settingsCreateContainer.className = 'settings-create-container';
         const createTextInput = this.createInput('text', 'create-text-input');
         const createColorInput = this.createInput('color', 'create-color-input', '#ffffff');
-        const createButton = this.createButton('Create', 'create-button');
-        settingsCreateContainer.append(createTextInput, createColorInput, createButton);
+        const createBtn = createButton('Create', 'create-button');
+        settingsCreateContainer.append(createTextInput, createColorInput, createBtn);
 
         const settingsUpdateContainer = document.createElement('div');
         settingsUpdateContainer.className = 'settings-update-container';
         const updateTextInput = this.createInput('text', 'update-text-input');
         const updateColorInput = this.createInput('color', 'update-color-input', '#ffffff');
-        const updateButton = this.createButton('Update', 'update-button');
+        const updateButton = createButton('Update', 'update-button');
         settingsUpdateContainer.append(updateTextInput, updateColorInput, updateButton);
 
         const settingsButtonsContainer = document.createElement('div');
         settingsButtonsContainer.className = 'settings-buttons-container';
-        const buttonRace = this.createButton('RACE', 'button-race');
-        const buttonReset = this.createButton('RESET', 'button-reset');
-        const buttonGenerate = this.createButton('GENERATE CARS', 'button-generate');
+        const buttonRace = createButton('RACE', 'button-race');
+        const buttonReset = createButton('RESET', 'button-reset');
+        const buttonGenerate = createButton('GENERATE CARS', 'button-generate');
         settingsButtonsContainer.append(buttonRace, buttonReset, buttonGenerate);
 
         settingsContainer.append(settingsCreateContainer, settingsUpdateContainer, settingsButtonsContainer);
         return settingsContainer;
     }
 
-    createCarContainer(id: number, name: string, color: string) {
-        const carContainer = document.createElement('div');
-        carContainer.className = 'car-container';
-
-        const carsControl = document.createElement('div');
-        carsControl.className = `cars-control`;
-
-        const racingTrack = document.createElement('div');
-        racingTrack.className = 'racing-track';
-
-        const buttonSelect = this.createButton('SELECT', 'button-select');
-        const buttonRemove = this.createButton('REMOVE', 'button-remove');
-        const carName = document.createElement('div');
-        carName.innerText = `${name}`;
-        carsControl.append(buttonSelect, buttonRemove, carName);
-
-        const buttonStart = this.createButton('A', 'button-start');
-        const buttonStop = this.createButton('B', 'button-stop');
-        const carImage = document.createElement('div');
-        carImage.innerHTML = `${sprite}
-        <svg class='image' fill="${color}">
-          <use xlink:href="#car-img"></use>
-        </svg>
-        `
-        racingTrack.append(buttonStart, buttonStop, carImage);
-
-        carContainer.append(carsControl, racingTrack);
-        return carContainer;
-      }
-
-
-    render() {
+    async render() {
         const title = this.createHeaderTitle(GaragePage.TextObject.GarageTitle);
         const settings = this.createSettings();
-        const car = this.createCarContainer(1, '1', '#ff0fff');
+        const car = await updateCars();
         this.container.append( settings, title, car);
 
         return this.container

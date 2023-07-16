@@ -6,6 +6,8 @@
 
 body {
   padding: 15px;
+  background-color: black;
+  color: azure;
 }
 
 .header div {
@@ -41,4 +43,44 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.car-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.cars-control {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.button-start,
+.button-stop {
+  margin-right: 5px;
+  padding: 2px;
+}
+
+.car-img,
+.image,
+.image use {
+  width: 60px;
+  height: 60px;
+}
+
+.racing-track {
+  display: flex;
+  align-items: center;
+  border-bottom: 5px dotted whitesmoke;
+}
+
+.flag {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 20%;
+  background-size: cover;
+  background-image: url(./img/finish.png);
 }
