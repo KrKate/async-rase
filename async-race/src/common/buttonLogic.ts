@@ -13,10 +13,8 @@ async function createNewCar() {
       const colorNewCar =  inputColorCreate.value;
       containerAllCar.innerHTML = '';
       carsCount.innerHTML = '';
-      console.log('create new car')
       await createCarAPI({ 'name': nameNewCar, 'color': colorNewCar });
       const arr = await getCarsAPI(pageNumber);
-      console.log(arr);
       arr.forEach((car: { id: number; name: string; color: string; }) => {
         const carItem = createCarContainer(car.id, car.name, car.color);
         containerAllCar.appendChild(carItem);
