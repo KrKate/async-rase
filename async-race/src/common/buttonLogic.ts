@@ -1,20 +1,28 @@
-import { createCarAPI, updateCars } from "./server";
-
+import {createCarAPI, getCarsAPI, pageNumber, countCars} from "./server";
+import createCarContainer from "./createCar";
 
 async function createNewCar() {
-  //  const containerAllCar = <HTMLInputElement>document.querySelector('.container-all-car');
+    const containerAllCar = <HTMLElement>document.querySelector('.container-all-car');
     const inputTextCreate = <HTMLInputElement>document.querySelector('.create-text-input');
     const inputColorCreate = <HTMLInputElement>document.querySelector('.create-color-input');
-    const createButton = document.querySelector('.create-button');
-  
+    const createButton = <HTMLButtonElement>document.querySelector('.create-button');
+    const carsCount = <HTMLElement>document.querySelector('.cars-count');
+
     createButton?.addEventListener('click', async () => {
       const nameNewCar =  inputTextCreate.value;
       const colorNewCar =  inputColorCreate.value;
-    //   containerAllCar.innerHTML = '';
-      console.log('work')
+      containerAllCar.innerHTML = '';
+      carsCount.innerHTML = '';
+      console.log('create new car')
       await createCarAPI({ 'name': nameNewCar, 'color': colorNewCar });
-      updateCars(); 
-    //   location.reload()
+      const arr = await getCarsAPI(pageNumber);
+      console.log(arr);
+      arr.forEach((car: { id: number; name: string; color: string; }) => {
+        const carItem = createCarContainer(car.id, car.name, car.color);
+        containerAllCar.appendChild(carItem);
+      });
+      countCars.count = arr.length;
+      carsCount.innerHTML = `(${arr.length})`;
     });
   }
 

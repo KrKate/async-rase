@@ -8,7 +8,7 @@ enum Path {
 
 const garage = `${Path.SERVER}/${Path.GARAGE}`;
 
-const getCarsAPI = async (page: number, limit: number = 7) => {
+export const getCarsAPI = async (page: number, limit: number = 7) => {
    const response = await fetch(`${garage}?_page=${page}&_limit=${limit}`, { method: 'GET' });
    return response.json();
 };

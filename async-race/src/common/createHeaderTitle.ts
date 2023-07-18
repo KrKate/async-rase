@@ -10,6 +10,7 @@ function createHeaderTitle(text: string, page: number, count: number) {
     headerTitle.innerText = text;
 
     const carsCount = document.createElement('div');
+    carsCount.className = 'cars-count';
     carsCount.innerText = `(${count})`
 
     const pageNumber = document.createElement('h4');
