@@ -1,6 +1,5 @@
 import createButton from "./createButton";
 import sprite from "../pages/garage/sprite";
-// import { garage } from "./server";
 
 function createCarContainer(id: number, name: string, color: string) {
     const carContainer = document.createElement('div');

@@ -1,8 +1,9 @@
 import createButton from "../../common/createButton";
-// import createCarContainer from "../../common/createCar";
-import updateCars from "../../common/server";
+import createHeaderTitle from "../../common/createHeaderTitle";
+import {updateCars, pageNumber, countCars } from "../../common/server";
+import createNewCar from "../../common/buttonLogic";
 
-class GaragePage {
+ class GaragePage {
     private container: HTMLElement;
 
     static TextObject = {
@@ -13,20 +14,6 @@ class GaragePage {
         this.container = document.createElement('div');
         this.container.id = id;
     }
-
- createHeaderTitle(text: string) {
-  const headerContainer = document.createElement('div');
-  headerContainer.className = 'header-container';
-
-  const headerTitle = document.createElement('h1');
-  headerTitle.innerText = text;
-
-  const carsCount = document.createElement('div');
-  carsCount.innerText = `(4)`;
-
-  headerContainer.append(headerTitle, carsCount);
-  return headerContainer;
-}
 
     public createInput(type: string, className: string, value?: string | undefined | null) {
         const input = document.createElement('input');
@@ -64,13 +51,13 @@ class GaragePage {
         settingsContainer.append(settingsCreateContainer, settingsUpdateContainer, settingsButtonsContainer);
         return settingsContainer;
     }
-
+    
     async render() {
-        const title = this.createHeaderTitle(GaragePage.TextObject.GarageTitle);
         const settings = this.createSettings();
+        await createNewCar();
         const car = await updateCars();
+        const title =  createHeaderTitle(GaragePage.TextObject.GarageTitle, pageNumber, countCars.count);
         this.container.append( settings, title, car);
-
         return this.container
     }
 }

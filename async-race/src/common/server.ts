@@ -13,17 +13,35 @@ const getCarsAPI = async (page: number, limit: number = 7) => {
    return response.json();
 };
 
-const pageNumber = 1;
+export const pageNumber = 1;
+export const countCars = {
+    count: 0
+};
 
-async function updateCars() {
+export async function updateCars() {
     const arr = await getCarsAPI(pageNumber);
     const containerAllCar = document.createElement('div');
+    containerAllCar.className = 'container-all-car';
     containerAllCar.innerHTML = '';
     arr.forEach((car: { id: number; name: string; color: string; }) => {
         const carItem = createCarContainer(car.id, car.name, car.color);
         containerAllCar.appendChild(carItem);
     });
+    countCars.count = arr.length;
     return containerAllCar;
 }
 
-export default updateCars;
+
+
+
+export const createCarAPI = async (body: object) => {
+    fetch(garage, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    updateCars();
+  };
+

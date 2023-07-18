@@ -1,8 +1,11 @@
-
 import GaragePage from "./pages/garage/garage";
 import WinnersPage from "./pages/winners/winners";
 import Header from "./common/header";
 import ErrorPage from "./pages/error/error";
+import createNewCar from "./common/buttonLogic";
+import { updateCars } from "./common/server";
+
+
 
 export enum PageIds {
    GARAGEPAGE = 'garage-page',
@@ -54,11 +57,15 @@ class App {
     this.header = new Header('header', 'header');
   }
 
-  run() {
-    App.container.append(this.header.render());
-    App.renderNewPage('garage-page');
-    this.enableRouteChange();
+ async run() {
+  
+   App.container.append(this.header.render());
+   await App.renderNewPage('garage-page');
+   this.enableRouteChange();
+   createNewCar();
+   updateCars();
   };
+
 }
 
 export default App;
