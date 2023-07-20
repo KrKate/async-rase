@@ -1,9 +1,11 @@
 import createButton from "./createButton";
 import sprite from "../pages/garage/sprite";
 
+
 function createCarContainer(id: number, name: string, color: string) {
     const carContainer = document.createElement('div');
     carContainer.className = 'car-container';
+    carContainer.id = id.toString();
 
     const carsControl = document.createElement('div');
     carsControl.className = `cars-control`;
@@ -12,7 +14,11 @@ function createCarContainer(id: number, name: string, color: string) {
     racingTrack.className = 'racing-track';
 
     const buttonSelect = createButton('SELECT', 'button-select');
+    buttonSelect.setAttribute('data-select', id.toString());
+
     const buttonRemove = createButton('REMOVE', 'button-remove');
+    buttonRemove.setAttribute('data-remove', id.toString());
+
     const carName = document.createElement('div');
     carName.innerText = `${name}`;
     carsControl.append(buttonSelect, buttonRemove, carName);

@@ -32,8 +32,6 @@ export async function updateCars() {
 }
 
 
-
-
 export const createCarAPI = async (body: object) => {
     fetch(garage, {
       method: 'POST',
@@ -45,3 +43,9 @@ export const createCarAPI = async (body: object) => {
     updateCars();
   };
 
+
+export const deleteCarAPI = async (id: number) => {
+  await fetch(`${garage}/${id}`, {
+    method: 'DELETE'
+  });
+};

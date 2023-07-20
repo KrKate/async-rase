@@ -1,8 +1,8 @@
 import createButton from "../../common/createButton";
 import createHeaderTitle from "../../common/createHeaderTitle";
 import {updateCars, pageNumber, countCars } from "../../common/server";
-import createNewCar from "../../common/buttonLogic";
 import createPaginationButton from "../../common/createPagButton";
+import { createNewCar, deleteCar } from "../../common/buttonLogic";
 
  class GaragePage {
     private container: HTMLElement;
@@ -56,10 +56,12 @@ import createPaginationButton from "../../common/createPagButton";
     async render() {
         const settings = this.createSettings();
         await createNewCar();
+        await deleteCar();
         const car = await updateCars();
         const title =  createHeaderTitle(GaragePage.TextObject.GarageTitle, pageNumber, countCars.count);
         const paginationButtonsContainer = createPaginationButton();
         this.container.append( settings, title, car, paginationButtonsContainer);
+        
         return this.container
     }
 }
