@@ -2,7 +2,7 @@ import GaragePage from "./pages/garage/garage";
 import WinnersPage from "./pages/winners/winners";
 import Header from "./common/header";
 import ErrorPage from "./pages/error/error";
-import { createNewCar, deleteCar } from "./common/buttonLogic";
+import { createNewCar, deleteCar, changeCar } from "./common/buttonLogic";
 import { updateCars } from "./common/server";
 
 
@@ -65,6 +65,7 @@ class App {
    createNewCar();
    updateCars();
    deleteCar();
+   changeCar();
   };
 
 }

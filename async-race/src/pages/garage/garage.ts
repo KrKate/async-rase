@@ -40,7 +40,11 @@ import { createNewCar, deleteCar } from "../../common/buttonLogic";
         const updateTextInput = this.createInput('text', 'update-text-input');
         const updateColorInput = this.createInput('color', 'update-color-input', '#ffffff');
         const updateButton = createButton('Update', 'update-button');
+        updateTextInput.disabled = true;
+        updateColorInput.disabled = true;
+        updateButton.disabled = true;
         settingsUpdateContainer.append(updateTextInput, updateColorInput, updateButton);
+        
 
         const settingsButtonsContainer = document.createElement('div');
         settingsButtonsContainer.className = 'settings-buttons-container';

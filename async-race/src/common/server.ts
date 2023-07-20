@@ -49,3 +49,14 @@ export const deleteCarAPI = async (id: number) => {
     method: 'DELETE'
   });
 };
+
+
+export const updateCarAPI = async (body: object, id: number) => {
+  await fetch(`${garage}/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+};
