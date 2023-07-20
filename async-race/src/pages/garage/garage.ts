@@ -56,12 +56,11 @@ import { createNewCar, deleteCar } from "../../common/buttonLogic";
     async render() {
         const settings = this.createSettings();
         await createNewCar();
-        await deleteCar();
         const car = await updateCars();
         const title =  createHeaderTitle(GaragePage.TextObject.GarageTitle, pageNumber, countCars.count);
         const paginationButtonsContainer = createPaginationButton();
         this.container.append( settings, title, car, paginationButtonsContainer);
-        
+        deleteCar();
         return this.container
     }
 }
