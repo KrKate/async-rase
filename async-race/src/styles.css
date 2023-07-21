@@ -94,3 +94,25 @@ body {
 .pagination-button-container button {
   padding: 2px;
 }
+
+.winner-title-container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.row-title {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  justify-content: space-around;
+  width: 60%;
+}
+
+.row-title div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+}

@@ -2,7 +2,7 @@ import createButton from "../../common/createButton";
 import createHeaderTitle from "../../common/createHeaderTitle";
 import {updateCars, pageNumber, countCars } from "../../common/server";
 import createPaginationButton from "../../common/createPagButton";
-import { createNewCar, deleteCar } from "../../common/buttonLogic";
+import { createNewCar, deleteCar, changeCar } from "../../common/buttonLogic";
 
  class GaragePage {
     private container: HTMLElement;
@@ -44,7 +44,6 @@ import { createNewCar, deleteCar } from "../../common/buttonLogic";
         updateColorInput.disabled = true;
         updateButton.disabled = true;
         settingsUpdateContainer.append(updateTextInput, updateColorInput, updateButton);
-        
 
         const settingsButtonsContainer = document.createElement('div');
         settingsButtonsContainer.className = 'settings-buttons-container';
@@ -65,6 +64,7 @@ import { createNewCar, deleteCar } from "../../common/buttonLogic";
         const paginationButtonsContainer = createPaginationButton();
         this.container.append( settings, title, car, paginationButtonsContainer);
         deleteCar();
+        changeCar();
         return this.container
     }
 }
