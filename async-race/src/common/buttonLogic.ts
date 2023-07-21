@@ -51,6 +51,7 @@ export async function deleteCar() {
 }
 
 // ПРОБЛЕМА. Машинки меняют цвет, но для изменения захватываются ВСЕ машинки, на select которых был клик
+// добавить флаг isSelected = true/false. После изменения конкретно машины переключать для нее на false
 
   export async function changeCar() {
     const selectButtons: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.button-select');
@@ -67,7 +68,7 @@ export async function deleteCar() {
         updateButton.disabled = false;
       });
     });
-    
+
     containerAllCar?.addEventListener('click', async (event) => {
       const buttonSelect = (<HTMLElement>event.target)?.closest('.button-select');
       if (!buttonSelect) return;

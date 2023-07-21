@@ -1,22 +1,39 @@
 import createCarContainer from "./createCar";
+import { createTable } from "../pages/winners/createWinnerTable";
 
 enum Path {
     SERVER = 'http://127.0.0.1:3000',
     GARAGE = 'garage',
+    WINNERS = 'winners',
     ENGINE = 'engine'
  }
 
+export const pageNumber = 1;
+export const countCars = {
+    count: 0
+};
+export const countWins = {
+  count: 0
+};
+
+
 const garage = `${Path.SERVER}/${Path.GARAGE}`;
+const winners = `${Path.SERVER}/${Path.WINNERS}`;
+
 
 export const getCarsAPI = async (page: number, limit: number = 7) => {
    const response = await fetch(`${garage}?_page=${page}&_limit=${limit}`, { method: 'GET' });
    return response.json();
 };
 
-export const pageNumber = 1;
-export const countCars = {
-    count: 0
+
+export const getWinnersAPI = async (page: number, limit = 10) => {
+  const response = await fetch(`${winners}?_page=${page}&_limit=${limit}`, { method: 'GET' });
+  countWins.count = Number(response.headers.get('X-Total-count'));
+  return response.json();
 };
+
+
 
 export async function updateCars() {
     const arr = await getCarsAPI(pageNumber);
@@ -31,6 +48,18 @@ export async function updateCars() {
     return containerAllCar;
 }
 
+
+export async function getWinners() {
+  const arr = await getWinnersAPI(pageNumber);
+  const containerAllWinners = document.createElement('div');
+  containerAllWinners.className = 'container-all-win';
+  containerAllWinners.innerHTML = '';
+  arr.forEach((win: { id: number; wins: number; time: number }) => {
+      const winItem = createTable(win.id, win.wins, win.time);
+      containerAllWinners.appendChild(winItem);
+  });
+  return containerAllWinners;
+}
 
 export const createCarAPI = async (body: object) => {
     fetch(garage, {

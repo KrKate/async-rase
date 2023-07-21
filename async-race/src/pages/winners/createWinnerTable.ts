@@ -12,12 +12,22 @@ export function createTableTitle() {
     const tableName = createTableCell('Name');
     const tableWins = createTableCell('Wins');
     const tableTime = createTableCell('Time');
+
     rowTitle.append(tableNumber, tableCar, tableName, tableWins, tableTime);
     return rowTitle;
-  }
-  
+}
 
+let count = 0;
+export function createTable(id: number, wins: number, time: number) {
+    const rowTable = document.createElement('div');
+    rowTable.className = 'row-title';
+    count +=1;
+    const rowNumber = createTableCell(`${count}`);
+    const rowCar = createTableCell('Car');
+    const rowName = createTableCell('Name');
+    const rowWins = createTableCell(`${wins}`);
+    const rowTime = createTableCell(`${time}`);
 
-export function createTable() {
-    console.log('Table')
+    rowTable.append(rowNumber, rowCar, rowName, rowWins, rowTime);
+    return rowTable;
 }

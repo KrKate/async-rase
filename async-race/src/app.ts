@@ -5,7 +5,7 @@ import ErrorPage from "./pages/error/error";
 import { createNewCar, deleteCar, changeCar } from "./common/buttonLogic";
 import { updateCars } from "./common/server";
 
-
+// ПРОБЛЕМА. После перехода на страницу winners перестают работать все функции (создание машинок, удаление) на странице garage
 
 export enum PageIds {
    GARAGEPAGE = 'garage-page',
@@ -41,6 +41,10 @@ class App {
       if (pageHTML instanceof HTMLElement) {
         pageHTML.id = App.currentPageId;
         App.container.append(pageHTML);
+        createNewCar();
+        updateCars();
+        deleteCar();
+        changeCar();
       }
     }
   }
@@ -58,7 +62,6 @@ class App {
   }
 
  async run() {
-  
    App.container.append(this.header.render());
    await App.renderNewPage('garage-page');
    this.enableRouteChange();
@@ -66,7 +69,6 @@ class App {
    updateCars();
    deleteCar();
    changeCar();
-   updateCars();
   };
 
 }
