@@ -1,8 +1,8 @@
 import createButton from "../../common/createButton";
 import createHeaderTitle from "../../common/createHeaderTitle";
 import {updateCars, pageNumber, countCars } from "../../common/server";
-import createPaginationButton from "../../common/createPagButton";
-import { createNewCar, deleteCar, changeCar, pagination} from "./garageLogic";
+import createPaginationButton from "../../common/createPaginationButton";
+import { createNewCar, deleteCar, changeCar, pagination, createRandomCars} from "./garageLogic";
 
 
  class GaragePage {
@@ -67,6 +67,7 @@ import { createNewCar, deleteCar, changeCar, pagination} from "./garageLogic";
         deleteCar();
         changeCar();
         pagination();
+        createRandomCars();
         return this.container
     }
 }

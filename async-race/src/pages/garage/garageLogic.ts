@@ -1,5 +1,6 @@
 import {createCarAPI, getCarsAPI, pageNumber, countCars, deleteCarAPI, updateCarAPI} from "../../common/server";
 import createCarContainer from "./createCar";
+import { getRandomCarName, getRandomCarColor } from "./carsRandome";
 
 const updateCarList = async () => {
   const containerAllCar = <HTMLElement>document.querySelector('.container-all-car');
@@ -10,7 +11,7 @@ const updateCarList = async () => {
   carsCount.innerHTML = totalCount.toString();
 
   data.forEach((car: { id: number; name: string; color: string; }) => {
-    const carItem = createCarContainer(car.id, car.name, car.color);
+   const carItem = createCarContainer(car.id, car.name, car.color);
     containerAllCar.appendChild(carItem);
   });
   countCars.count = totalCount;
@@ -33,6 +34,8 @@ export async function createNewCar() {
 }
 
 
+// ПРОБЛЕМА. При удалении машинок сыпятся ошибки 404
+// Но перерисовка контейнера с машинками происходит после удаления машинок с сервера
 export async function deleteCar() {
   const containerAllCar = <HTMLElement>document.querySelector('.container-all-car');
 
@@ -42,10 +45,8 @@ export async function deleteCar() {
 
     const carContainer = buttonRemove.closest('.car-container') as HTMLElement;
     const carId = buttonRemove.getAttribute('data-remove');
-
     await deleteCarAPI(Number(carId));
     carContainer.remove();
-
     await updateCarList();
   });
 }
@@ -94,18 +95,41 @@ export async function deleteCar() {
 
 
 export async function pagination() {
-    const prev = <HTMLButtonElement>document.querySelector('.garage-prev-button');
-    const next = <HTMLButtonElement>document.querySelector('.garage-next-button');
-    const number = <HTMLElement>document.querySelector('h4');
-    next?.addEventListener('click', async () => {
-      pageNumber.number += 1;
-      await updateCarList();
-      number.textContent = `Page #${pageNumber.number}`
-    })
+  const prev = <HTMLButtonElement>document.querySelector('.garage-prev-button');
+  const next = <HTMLButtonElement>document.querySelector('.garage-next-button');
+  const number = <HTMLElement>document.querySelector('h4');
 
-   prev?.addEventListener('click', async () => {
+  next?.addEventListener('click', async () => {
+    pageNumber.number += 1;
+    await updateCarList();
+    number.textContent = `Page #${pageNumber.number}`
+    prev.disabled = false
+  })
+
+  prev?.addEventListener('click', async () => {
+    if (pageNumber.number > 1) {
       pageNumber.number -= 1;
       await updateCarList();
-      number.textContent = `Page #${pageNumber.number}`
-    })
-  }
+      number.textContent = `Page #${pageNumber.number}`;
+    }
+    if (pageNumber.number === 1) {
+      prev.disabled = true;
+    }
+  });
+}
+
+export async function createRandomCars() {
+  const generateButton = document.querySelector('.button-generate');
+  console.log(generateButton);
+  generateButton?.addEventListener('click', async () => {
+    const promises = [];
+    for (let i = 0; i < 100; i += 1) {
+      const randomName = getRandomCarName();
+      const randomColor = getRandomCarColor();
+      promises.push(createCarAPI({ 'name': randomName, 'color': randomColor }));
+    }
+    await Promise.all(promises);
+    updateCarList();
+  });
+}
+

@@ -1,5 +1,5 @@
 import { createTableTitle } from "./createWinnerTable";
-import createPaginationButton from "../../common/createPagButton";
+import createPaginationButton from "../../common/createPaginationButton";
 import { getWinners, countWinners } from "../../common/server";
 
 class WinnersPage {
