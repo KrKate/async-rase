@@ -1,6 +1,6 @@
 import { createTableTitle } from "./createWinnerTable";
 import createPaginationButton from "../../common/createPagButton";
-import { getWinners } from "../../common/server";
+import { getWinners, countWinners } from "../../common/server";
 
 class WinnersPage {
     private container: HTMLElement;
@@ -38,10 +38,10 @@ class WinnersPage {
 
 
     async render() {
-        const title = this.createHeaderTitle(WinnersPage.TextObject.WinnersTitle, 3, 1);
+        const title = this.createHeaderTitle(WinnersPage.TextObject.WinnersTitle, countWinners.numberOfWinners, 1);
         const tableTitle = createTableTitle();
         const table = await getWinners();
-        const pagination = createPaginationButton();
+        const pagination = createPaginationButton('winners');
         this.container.append(title, tableTitle, table, pagination);
         return this.container
     }

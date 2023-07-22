@@ -17,11 +17,10 @@ export function createTableTitle() {
     return rowTitle;
 }
 
-let count = 0;
-export function createTable(id: number, wins: number, time: number) {
+
+export function createTable(id: number, wins: number, time: number, count: number) {
     const rowTable = document.createElement('div');
     rowTable.className = 'row-title';
-    count +=1;
     const rowNumber = createTableCell(`${count}`);
     const rowCar = createTableCell('Car');
     const rowName = createTableCell('Name');

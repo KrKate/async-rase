@@ -2,10 +2,12 @@ import GaragePage from "./pages/garage/garage";
 import WinnersPage from "./pages/winners/winners";
 import Header from "./common/header";
 import ErrorPage from "./pages/error/error";
-import { createNewCar, deleteCar, changeCar } from "./common/buttonLogic";
-import { updateCars } from "./common/server";
+import { createNewCar, deleteCar, changeCar, pagination } from "./pages/garage/garageLogic";
+import { getWinners, updateCars } from "./common/server";
+
 
 // ПРОБЛЕМА. После перехода на страницу winners перестают работать все функции (создание машинок, удаление) на странице garage
+// Решено: добавить все функции в создание страницы
 
 export enum PageIds {
    GARAGEPAGE = 'garage-page',
@@ -43,8 +45,11 @@ class App {
         App.container.append(pageHTML);
         createNewCar();
         updateCars();
+        getWinners();
         deleteCar();
         changeCar();
+        pagination()
+
       }
     }
   }
@@ -65,10 +70,11 @@ class App {
    App.container.append(this.header.render());
    await App.renderNewPage('garage-page');
    this.enableRouteChange();
-   createNewCar();
-   updateCars();
-   deleteCar();
-   changeCar();
+  //  createNewCar();
+  //  updateCars();
+  //  getWinners();
+  //  deleteCar();
+  //  changeCar();
   };
 
 }

@@ -1,5 +1,5 @@
-import createButton from "./createButton";
-import sprite from "../pages/garage/sprite";
+import createButton from "../../common/createButton";
+import sprite from "./sprite";
 
 
 function createCarContainer(id: number, name: string, color: string) {

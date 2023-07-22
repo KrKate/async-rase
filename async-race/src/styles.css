@@ -99,7 +99,6 @@ body {
   display: flex;
   gap: 15px;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .row-title {
@@ -115,4 +114,8 @@ body {
   justify-content: center;
   align-items: center;
   border: 1px solid white;
+}
+
+.header-container {
+  margin-bottom: 20px;
 }
