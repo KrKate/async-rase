@@ -2,7 +2,7 @@ import GaragePage from "./pages/garage/garage";
 import WinnersPage from "./pages/winners/winners";
 import Header from "./common/header";
 import ErrorPage from "./pages/error/error";
-import { createNewCar, deleteCar, changeCar, pagination, createRandomCars} from "./pages/garage/garageLogic";
+import { createNewCar, deleteCar, changeCar, paginationGarage, createRandomCars} from "./pages/garage/garageLogic";
 import { getWinners, updateCars } from "./common/server";
 
 
@@ -37,7 +37,11 @@ class App {
     } else {
       page = new ErrorPage(idPage, '404');
     }
-
+ 
+    // ПРОБЛЕМА. Если сначала нажать на create во вкладке Garage
+    // а потом сразу, без выполнения других действий попытаться перейти
+    // на страницу Winners, то переход не выполнится
+    // в run добавить createNewCar не могу, т.к. создается сразу две машинки
     if (page) {
       const pageHTML = await page.render();
       if (pageHTML instanceof HTMLElement) {
@@ -48,7 +52,7 @@ class App {
         getWinners();
         deleteCar();
         changeCar();
-        pagination();
+        paginationGarage();
         createRandomCars()
       }
     }
@@ -70,11 +74,12 @@ class App {
    App.container.append(this.header.render());
    await App.renderNewPage('garage-page');
    this.enableRouteChange();
-  //  createNewCar();
-  //  updateCars();
-  //  getWinners();
-  //  deleteCar();
-  //  changeCar();
+   // createNewCar();
+   updateCars();
+   getWinners();
+   deleteCar();
+   changeCar();
+   paginationGarage();
   };
 
 }

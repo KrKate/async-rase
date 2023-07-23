@@ -8,8 +8,9 @@ enum Path {
     ENGINE = 'engine'
  }
 
-export const pageNumber = {
-  number: 1
+ export const pageNumber = {
+  numberGaragePage: 1,
+  numberWinnerPage: 1
 }
 
 export const countCars = {
@@ -49,7 +50,7 @@ export const getWinnersAPI = async (page: number, limit = 10) => {
 
 
 export async function updateCars() {
-  const { totalCount, data } = await getCarsAPI(pageNumber.number);
+  const { totalCount, data } = await getCarsAPI(pageNumber.numberGaragePage);
   const containerAllCar = document.createElement('div');
   containerAllCar.className = 'container-all-car';
   containerAllCar.innerHTML = '';
@@ -62,7 +63,7 @@ export async function updateCars() {
 }
 
 export async function getWinners() {
-  const arr = await getWinnersAPI(pageNumber.number);
+  const arr = await getWinnersAPI(pageNumber.numberWinnerPage);
   const containerAllWinners = document.createElement('div');
   containerAllWinners.className = 'container-all-win';
   containerAllWinners.innerHTML = '';

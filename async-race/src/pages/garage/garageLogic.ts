@@ -6,7 +6,7 @@ const updateCarList = async () => {
   const containerAllCar = <HTMLElement>document.querySelector('.container-all-car');
   const carsCount = <HTMLElement>document.querySelector('.cars-count');
 
-  const { totalCount, data } = await getCarsAPI(pageNumber.number);
+  const { totalCount, data } = await getCarsAPI(pageNumber.numberGaragePage);
   containerAllCar.innerHTML = '';
   carsCount.innerHTML = totalCount.toString();
 
@@ -79,7 +79,7 @@ export async function deleteCar() {
 
       await updateCarAPI({ 'name': inputTextUpdate.value, 'color': inputColorUpdate.value }, Number(carId));
 
-      const { totalCount, data } = await getCarsAPI(pageNumber.number);
+      const { totalCount, data } = await getCarsAPI(pageNumber.numberGaragePage);
       containerAllCar.innerHTML = '';
       carsCount.innerHTML = totalCount.toString();
 
@@ -94,25 +94,25 @@ export async function deleteCar() {
   }
 
 
-export async function pagination() {
+export async function paginationGarage() {
   const prev = <HTMLButtonElement>document.querySelector('.garage-prev-button');
   const next = <HTMLButtonElement>document.querySelector('.garage-next-button');
   const number = <HTMLElement>document.querySelector('h4');
 
   next?.addEventListener('click', async () => {
-    pageNumber.number += 1;
+    pageNumber.numberGaragePage += 1;
     await updateCarList();
-    number.textContent = `Page #${pageNumber.number}`
+    number.textContent = `Page #${pageNumber.numberGaragePage}`
     prev.disabled = false
   })
 
   prev?.addEventListener('click', async () => {
-    if (pageNumber.number > 1) {
-      pageNumber.number -= 1;
+    if (pageNumber.numberGaragePage > 1) {
+      pageNumber.numberGaragePage -= 1;
       await updateCarList();
-      number.textContent = `Page #${pageNumber.number}`;
+      number.textContent = `Page #${pageNumber.numberGaragePage}`;
     }
-    if (pageNumber.number === 1) {
+    if (pageNumber.numberGaragePage === 1) {
       prev.disabled = true;
     }
   });

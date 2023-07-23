@@ -2,7 +2,7 @@ import createButton from "../../common/createButton";
 import createHeaderTitle from "../../common/createHeaderTitle";
 import {updateCars, pageNumber, countCars } from "../../common/server";
 import createPaginationButton from "../../common/createPaginationButton";
-import { createNewCar, deleteCar, changeCar, pagination, createRandomCars} from "./garageLogic";
+import { createNewCar, deleteCar, changeCar, paginationGarage, createRandomCars} from "./garageLogic";
 
 
  class GaragePage {
@@ -61,12 +61,12 @@ import { createNewCar, deleteCar, changeCar, pagination, createRandomCars} from 
         const settings = this.createSettings();
         await createNewCar();
         const car = await updateCars();
-        const title =  createHeaderTitle(GaragePage.TextObject.GarageTitle, pageNumber.number, countCars.count);
+        const title =  createHeaderTitle(GaragePage.TextObject.GarageTitle, pageNumber.numberGaragePage, countCars.count);
         const paginationButtonsContainer = createPaginationButton('garage');
         this.container.append( settings, title, car, paginationButtonsContainer);
         deleteCar();
         changeCar();
-        pagination();
+        paginationGarage();
         createRandomCars();
         return this.container
     }
