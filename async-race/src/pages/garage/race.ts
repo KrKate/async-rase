@@ -55,7 +55,7 @@ function animation(car: HTMLElement, distance: number, duration: number) {
 
     infoAnimation[idCar] = animation(carImg, distanceAnimation, time);
 
-    driveModeEngine(idCar).then((drive) => {
+    driveModeEngine(idCar).then((drive: { success: any; }) => {
       if (!drive.success) {
         window.cancelAnimationFrame(infoAnimation[idCar].id);
       }
@@ -105,18 +105,16 @@ function animation(car: HTMLElement, distance: number, duration: number) {
     });
   }
 
-
 async function commonRace(page: number) {
   const response = await getCarsAPI(page, 7);
   const carInfoArray = response.data;
-  await Promise.all(carInfoArray.map(car => start(car.id)));
+  await Promise.all(carInfoArray.map((car: { id: number; }) => start(car.id)));
 }
-
 
 async function commonStop(page: number) {
   const response = await getCarsAPI(page, 7);
   const carInfoArray = response.data;
-  await Promise.all(carInfoArray.map(car => stop(car.id)));
+  await Promise.all(carInfoArray.map((car: { id: number; }) => stop(car.id)));
 }
 
 export async function commonRaceStart() {
