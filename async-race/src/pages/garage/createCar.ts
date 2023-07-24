@@ -26,8 +26,10 @@ function createCarContainer(id: number, name: string, color: string) {
     const buttonStart = createButton('A', 'button-start');
     buttonStart.setAttribute('data-start', id.toString());
 
+
     const buttonStop = createButton('B', 'button-stop');
     buttonStop.setAttribute('data-stop', id.toString());
+    buttonStop.disabled = true;
 
 
     const carImage = document.createElement('span');

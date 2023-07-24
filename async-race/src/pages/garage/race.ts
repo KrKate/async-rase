@@ -42,33 +42,31 @@ function animation(car: HTMLElement, distance: number, duration: number) {
 }
 
   const start = async (idCar: number) => {
-    startEngine(idCar).then((car) => {
-      const velocity = Number(car.velocity);
-      const distance = Number(car.distance);
-      time = distance / velocity;
+    const car = await startEngine(idCar);
+    const velocity = Number(car.velocity);
+    const distance = Number(car.distance);
+    time = distance / velocity;
 
-      const carImg = <HTMLElement>document.querySelector(`#carImg-${idCar}`);
-      const screenWidth = document.body.clientWidth;
-      const positionCar = screenWidth * carPositionPercentage;
-      const distanceAnimation = screenWidth - positionCar;
+    const carImg = <HTMLElement>document.querySelector(`#carImg-${idCar}`);
+    const screenWidth = document.body.clientWidth;
+    const positionCar = screenWidth * carPositionPercentage;
+    const distanceAnimation = screenWidth - positionCar;
 
-      infoAnimation[idCar] = animation(carImg, distanceAnimation, time);
+    infoAnimation[idCar] = animation(carImg, distanceAnimation, time);
 
-      driveModeEngine(idCar).then((drive) => {
-        if (!drive.success) {
-          window.cancelAnimationFrame(infoAnimation[idCar].id);
-        }
-      });
+    driveModeEngine(idCar).then((drive) => {
+      if (!drive.success) {
+        window.cancelAnimationFrame(infoAnimation[idCar].id);
+      }
     });
   };
 
 
    const stop = async (idCar: number) => {
-    stopEngine(idCar).then(() => {
-      window.cancelAnimationFrame(infoAnimation[idCar].id);
-      const carImg = <HTMLElement>document.querySelector(`#carImg-${idCar}`);
-      carImg.style.transform = 'translateX(0px)';
-    });
+    await stopEngine(idCar);
+    window.cancelAnimationFrame(infoAnimation[idCar].id);
+    const carImg = <HTMLElement>document.querySelector(`#carImg-${idCar}`);
+    carImg.style.transform = 'translateX(0px)';
   };
 
 
@@ -78,23 +76,31 @@ function animation(car: HTMLElement, distance: number, duration: number) {
   export async function carStart() {
     const containerAllCar = document.querySelector('.container-all-car');
     containerAllCar?.addEventListener('click', async (event) => {
-      const buttonStart = event.target as HTMLElement;
+      const buttonStart = event.target as HTMLButtonElement;
       const idCar = buttonStart?.dataset.start;
-      if (!Number.isNaN(Number(idCar))) {
-        start(Number(idCar));
+      if (!Number.isNaN(Number(idCar)) && (Number(idCar))) {
+        await start(Number(idCar));
+        const btnStart = document.querySelector(`[data-start='${idCar}']`) as HTMLButtonElement;
+        const btnStop = document.querySelector(`[data-stop='${idCar}']`) as HTMLButtonElement;
+        btnStart.disabled = true;
+        btnStop.disabled = false;
       }
     });
   }
 
 
-  export function carStop() {
+  export async function carStop() {
     const containerAllCar = document.querySelector('.container-all-car');
     containerAllCar?.addEventListener('click', async (event) => {
-      const buttonStop = event.target as HTMLElement;
+      const buttonStop = event.target as HTMLButtonElement;
       const idCar = buttonStop?.dataset.stop;
-      if (!Number.isNaN(Number(idCar))) {
-        stop(Number(idCar));
+      if (!Number.isNaN(Number(idCar)) && (Number(idCar))) {
+        await stop(Number(idCar));
+        const btnStart = document.querySelector(`[data-start='${idCar}']`) as HTMLButtonElement;
+        const btnStop = document.querySelector(`[data-stop='${idCar}']`) as HTMLButtonElement;
+        btnStop.disabled = true;
+        btnStart.disabled = false;
       }
     });
   }
-  
+
