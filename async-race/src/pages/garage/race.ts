@@ -55,7 +55,7 @@ function animation(car: HTMLElement, distance: number, duration: number) {
 
     infoAnimation[idCar] = animation(carImg, distanceAnimation, time);
 
-    driveModeEngine(idCar).then((drive: { success: any; }) => {
+    driveModeEngine(idCar).then((drive: { success: boolean; }) => {
       if (!drive.success) {
         window.cancelAnimationFrame(infoAnimation[idCar].id);
       }
