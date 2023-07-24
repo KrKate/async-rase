@@ -3,8 +3,9 @@ import WinnersPage from "./pages/winners/winners";
 import Header from "./common/header";
 import ErrorPage from "./pages/error/error";
 import { createNewCar, deleteCar, changeCar, paginationGarage, createRandomCars} from "./pages/garage/garageLogic";
-import { carStart, carStop } from "./pages/garage/race";
+import { carStart, carStop, commonRaceStart } from "./pages/garage/race";
 import { getWinners, updateCars } from "./common/server";
+
 
 
 // ПРОБЛЕМА. После перехода на страницу winners перестают работать все функции (создание машинок, удаление) на странице garage
@@ -58,6 +59,7 @@ class App {
         createRandomCars();
         carStart();
         carStop();
+        commonRaceStart()
       }
     }
   }
@@ -83,6 +85,7 @@ class App {
    getWinners();
    deleteCar();
    changeCar();
+   // commonRaceStart();
    // paginationGarage();
    // carStart();
   };

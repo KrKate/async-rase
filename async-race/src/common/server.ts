@@ -33,11 +33,17 @@ export const getCarByID = async (id: number) => {
   return data;
 };
 
-
+export type Car = {
+  name: string;
+  color: string;
+  id: number;
+  wins: number,
+  time: number
+};
 export const getCarsAPI = async (page: number, limit: number = 7) => {
    const response = await fetch(`${garage}?_page=${page}&_limit=${limit}`, { method: 'GET' });
    const totalCount = Number(response.headers.get('X-Total-count'));
-   const data = await response.json();
+   const data: Car[] = await response.json();
    return { totalCount, data };
 };
 

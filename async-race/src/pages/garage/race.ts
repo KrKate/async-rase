@@ -1,4 +1,5 @@
-import { startEngine, driveModeEngine, stopEngine } from "../../common/server";
+import { startEngine, driveModeEngine, stopEngine, getCarsAPI, pageNumber } from "../../common/server";
+
 
 let time: number;
 const carPositionPercentage = 0.23;
@@ -104,3 +105,16 @@ function animation(car: HTMLElement, distance: number, duration: number) {
     });
   }
 
+
+async function commonRace(page: number) {
+  const response = await getCarsAPI(page, 7);
+  const carInfoArray = response.data;
+  await Promise.all(carInfoArray.map(car => start(car.id)));
+}
+
+export async function commonRaceStart() {
+  const raceStartButton = <HTMLButtonElement>document.querySelector('.button-race');
+  raceStartButton?.addEventListener('click', () => {
+    commonRace(pageNumber.numberGaragePage);
+  })
+}
