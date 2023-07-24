@@ -112,9 +112,23 @@ async function commonRace(page: number) {
   await Promise.all(carInfoArray.map(car => start(car.id)));
 }
 
+
+async function commonStop(page: number) {
+  const response = await getCarsAPI(page, 7);
+  const carInfoArray = response.data;
+  await Promise.all(carInfoArray.map(car => stop(car.id)));
+}
+
 export async function commonRaceStart() {
   const raceStartButton = <HTMLButtonElement>document.querySelector('.button-race');
   raceStartButton?.addEventListener('click', () => {
     commonRace(pageNumber.numberGaragePage);
+  })
+}
+
+export async function commonRaceStop() {
+  const raceStopButton = <HTMLButtonElement>document.querySelector('.button-reset');
+  raceStopButton?.addEventListener('click', () => {
+    commonStop(pageNumber.numberGaragePage);
   })
 }

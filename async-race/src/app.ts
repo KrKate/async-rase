@@ -3,7 +3,7 @@ import WinnersPage from "./pages/winners/winners";
 import Header from "./common/header";
 import ErrorPage from "./pages/error/error";
 import { createNewCar, deleteCar, changeCar, paginationGarage, createRandomCars} from "./pages/garage/garageLogic";
-import { carStart, carStop, commonRaceStart } from "./pages/garage/race";
+import { carStart, carStop, commonRaceStart, commonRaceStop } from "./pages/garage/race";
 import { getWinners, updateCars } from "./common/server";
 
 
@@ -59,7 +59,8 @@ class App {
         createRandomCars();
         carStart();
         carStop();
-        commonRaceStart()
+        commonRaceStart();
+        commonRaceStop();
       }
     }
   }
