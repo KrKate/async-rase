@@ -1,17 +1,8 @@
-import { startEngine, driveModeEngine } from "../../common/server";
+import { startEngine, driveModeEngine, stopEngine } from "../../common/server";
 
 let time: number;
 const carPositionPercentage = 0.23;
 
-
-
-// export function carStopB() {
-//     const containerAllCar = <HTMLElement>document.querySelector('.container-all-car');
-//     containerAllCar?.addEventListener('click', async (event) => {
-//         const buttonStop = (<HTMLElement>event.target)?.closest('.button-stop')
-//      });
-
-// }
 
 export type СarInfo = {
     [key: string | number]: number | string,
@@ -72,14 +63,38 @@ function animation(car: HTMLElement, distance: number, duration: number) {
   };
 
 
+   const stop = async (idCar: number) => {
+    stopEngine(idCar).then(() => {
+      window.cancelAnimationFrame(infoAnimation[idCar].id);
+      const carImg = <HTMLElement>document.querySelector(`#carImg-${idCar}`);
+      carImg.style.transform = 'translateX(0px)';
+    });
+  };
+
+
+// ПРОБЛЕМА. Визуально всё работает, но в консоль сыпятся ошибки 404 (id NaN)
+// РЕШЕНО. Помогла проверка на isNaN
+
   export async function carStart() {
     const containerAllCar = document.querySelector('.container-all-car');
     containerAllCar?.addEventListener('click', async (event) => {
       const buttonStart = event.target as HTMLElement;
       const idCar = buttonStart?.dataset.start;
-      console.log(idCar);
-      start(Number(idCar));
+      if (!Number.isNaN(Number(idCar))) {
+        start(Number(idCar));
+      }
     });
   }
 
-  export default carStart;
+
+  export function carStop() {
+    const containerAllCar = document.querySelector('.container-all-car');
+    containerAllCar?.addEventListener('click', async (event) => {
+      const buttonStop = event.target as HTMLElement;
+      const idCar = buttonStop?.dataset.stop;
+      if (!Number.isNaN(Number(idCar))) {
+        stop(Number(idCar));
+      }
+    });
+  }
+  

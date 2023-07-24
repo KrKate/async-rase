@@ -119,9 +119,9 @@ export const driveModeEngine = async (id: number) => {
     const res = await fetch(`${engine}?id=${id}&status=drive`, { method: 'PATCH' });
     if (res.status === 200) {
       return await res.json();
-    } 
+    }
       return { success: false };
-    
+
   } catch (error) {
     console.error('Oh no! Something went wrong');
     return { success: false };
