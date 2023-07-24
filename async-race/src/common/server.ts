@@ -24,6 +24,7 @@ export const countWinners = {
 
 const garage = `${Path.SERVER}/${Path.GARAGE}`;
 const winners = `${Path.SERVER}/${Path.WINNERS}`;
+const engine = `${Path.SERVER}/${Path.ENGINE}`;
 
 
 export const getCarByID = async (id: number) => {
@@ -104,4 +105,25 @@ export const updateCarAPI = async (body: object, id: number) => {
       'Content-Type': 'application/json'
     },
   });
+};
+
+
+
+export const startEngine = async (id: number) => (await fetch(`${engine}?id=${id}&status=started`, { method: 'PATCH' })).json();
+
+export const stopEngine = async (id: number) => (await fetch(`${engine}?id=${id}&status=stopped`, { method: 'PATCH' })).json();
+
+
+export const driveModeEngine = async (id: number) => {
+  try {
+    const res = await fetch(`${engine}?id=${id}&status=drive`, { method: 'PATCH' });
+    if (res.status === 200) {
+      return await res.json();
+    } 
+      return { success: false };
+    
+  } catch (error) {
+    console.error('Oh no! Something went wrong');
+    return { success: false };
+  }
 };

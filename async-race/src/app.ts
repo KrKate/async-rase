@@ -3,6 +3,7 @@ import WinnersPage from "./pages/winners/winners";
 import Header from "./common/header";
 import ErrorPage from "./pages/error/error";
 import { createNewCar, deleteCar, changeCar, paginationGarage, createRandomCars} from "./pages/garage/garageLogic";
+import { carStart } from "./pages/garage/race";
 import { getWinners, updateCars } from "./common/server";
 
 
@@ -38,10 +39,11 @@ class App {
       page = new ErrorPage(idPage, '404');
     }
  
-    // ПРОБЛЕМА. Если сначала нажать на create во вкладке Garage
-    // а потом сразу, без выполнения других действий попытаться перейти
-    // на страницу Winners, то переход не выполнится
-    // в run добавить createNewCar не могу, т.к. создается сразу две машинки
+ 
+// ПРОБЛЕМА. Если сначала нажать на create во вкладке Garage
+// а потом сразу, без выполнения других действий попытаться перейти
+// на страницу Winners, то переход не выполнится
+// в run добавить createNewCar не могу, т.к. создается сразу две машинки
     if (page) {
       const pageHTML = await page.render();
       if (pageHTML instanceof HTMLElement) {
@@ -53,7 +55,8 @@ class App {
         deleteCar();
         changeCar();
         paginationGarage();
-        createRandomCars()
+        createRandomCars();
+        carStart();
       }
     }
   }
@@ -80,6 +83,7 @@ class App {
    deleteCar();
    changeCar();
    paginationGarage();
+   // carStart();
   };
 
 }

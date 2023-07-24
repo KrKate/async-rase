@@ -3,6 +3,7 @@ import createHeaderTitle from "../../common/createHeaderTitle";
 import {updateCars, pageNumber, countCars } from "../../common/server";
 import createPaginationButton from "../../common/createPaginationButton";
 import { createNewCar, deleteCar, changeCar, paginationGarage, createRandomCars} from "./garageLogic";
+import { carStart } from "./race";
 
 
  class GaragePage {
@@ -68,6 +69,7 @@ import { createNewCar, deleteCar, changeCar, paginationGarage, createRandomCars}
         changeCar();
         paginationGarage();
         createRandomCars();
+        carStart();
         return this.container
     }
 }

@@ -24,9 +24,15 @@ function createCarContainer(id: number, name: string, color: string) {
     carsControl.append(buttonSelect, buttonRemove, carName);
 
     const buttonStart = createButton('A', 'button-start');
+    buttonStart.setAttribute('data-start', id.toString());
+
     const buttonStop = createButton('B', 'button-stop');
+    buttonStop.setAttribute('data-stop', id.toString());
+
+
     const carImage = document.createElement('span');
     carImage.className = 'car-img';
+    carImage.id = `carImg-${id}`;
     carImage.innerHTML = `${sprite}
     <svg class='image' fill="${color}">
       <use xlink:href="#car-img"></use>

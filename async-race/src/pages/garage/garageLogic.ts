@@ -75,7 +75,6 @@ export async function deleteCar() {
       if (!buttonSelect) return;
         updateButton.addEventListener('click', async () => {
           const carId = buttonSelect.getAttribute('data-select');
-          console.log(carId)
 
       await updateCarAPI({ 'name': inputTextUpdate.value, 'color': inputColorUpdate.value }, Number(carId));
 
@@ -120,7 +119,6 @@ export async function paginationGarage() {
 
 export async function createRandomCars() {
   const generateButton = document.querySelector('.button-generate');
-  console.log(generateButton);
   generateButton?.addEventListener('click', async () => {
     const promises = [];
     for (let i = 0; i < 100; i += 1) {
